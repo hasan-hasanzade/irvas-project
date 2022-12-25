@@ -1,7 +1,7 @@
 const forms = () => {
    const form = document.querySelectorAll('form'),
-         inputs = document.querySelectorAll('input'),
-         phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+        inputs = document.querySelectorAll('input'),
+        phoneInputs = document.querySelectorAll('input[name="user_phone"]');
 
     phoneInputs.forEach(item => {
         item.addEventListener('input', () => {
@@ -10,9 +10,9 @@ const forms = () => {
     })
 
     const message = {
-        loading: 'Загрузка...',
-        success: 'Спасибо! Скоро с вами свяжутся',
-        failure: 'Чтото пошло не так...'
+        loading: "Загрузка...",
+        success: "Спасибо скоро бы с вами свяжемся",
+        failure: "Что-то пошло не так..."
     };
 
     const postData = async (url, data) => {
@@ -25,14 +25,15 @@ const forms = () => {
         return await res.text();
     };
 
+
     const clearInputs = () => {
         inputs.forEach(item => {
-            item.value = " ";
-        })
+            item.value = '';
+        });
     }
-
+    
     form.forEach(item => {
-        item.addEventListener('submit', (e) => {
+        item.addEventListener('submit', (e)=> {
             e.preventDefault();
 
             let statusMessage = document.createElement('div');
@@ -42,20 +43,19 @@ const forms = () => {
             const formData = new FormData(item);
 
             postData("assets/server.php", formData)
-            .then(res => {
-                console.log(res);
-                statusMessage.textContent = message.success;
-            })
-            .catch(() => statusMessage.textContent = message.failure)
-            .finally(() => {
-                clearInputs();
-                setTimeout(() => {
-                    statusMessage.remove();
-                }, 5000);
-            });
-        });
-    })
-
+                .then(res => {
+                    console.log(res);
+                    statusMessage.textContent = message.success;
+                })
+                .catch(() => statusMessage.textContent = message.failure)
+                .finally(()=> {
+                    clearInputs();
+                    setTimeout(() =>{
+                        statusMessage.remove();
+                    }, 5000);
+                })
+        })
+    });
    
 };
 
